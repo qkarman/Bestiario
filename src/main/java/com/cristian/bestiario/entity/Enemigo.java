@@ -1,12 +1,12 @@
 package com.cristian.bestiario.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.HashSet;
+import java.util.Set;
 
 //Creamos todas las anotaciones de lombok
 @Entity //Esta annotation representa una tabla en la base de datos
@@ -26,4 +26,11 @@ public class Enemigo
     Integer ataque;
     String habilidad;
     String descripcion;
+    Boolean favorito;
+    String notas;
+
+    //Creamos la lista de guardado y el many es para indicar una relacion de muchos a muchos entre entidad de
+    //enemigo y usuario
+    @ManyToMany(mappedBy = "favoritos")
+    private Set<Usuario> usuariosFavoritos = new HashSet<>();
 }

@@ -1,7 +1,10 @@
 package com.cristian.bestiario.Service;
 
+import com.cristian.bestiario.dto.DescripcionDTO;
+import com.cristian.bestiario.dto.StatsDTO;
 import com.cristian.bestiario.entity.Enemigo; //la entidad que se esta gestionando
 import com.cristian.bestiario.repository.EnemigoRepository;
+import com.cristian.bestiario.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -65,6 +68,24 @@ public class EnemigoService implements IEnemigoService
     public List<Enemigo> buscarEnemigosPorVida(Integer vida)
     {
         return enemigoRepository.findByVida(vida);
+    }
+
+    //!Prueba para el DTO de enemigos Stats
+    public List<StatsDTO> buscarStatsPorNombre(String nombre)
+    {
+        return enemigoRepository.findStatsByNombre(nombre);
+    }
+
+    //!Creamos el bug que vamos a corregir
+    public List<DescripcionDTO> buscarDescripcionPorNombre(String nombre)
+    {
+        return enemigoRepository.findDescripcionByNombre(nombre);
+    }
+
+    //! Creamos el Metodo de comunicacion para el enemigo poderoso
+    public List<StatsDTO> obtenerStatsPoderosos(int ataqueMin, int vidaMin)
+    {
+        return enemigoRepository.filtrarEnemigosPoderosos(ataqueMin, vidaMin);
     }
 
 }

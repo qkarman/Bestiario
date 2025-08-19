@@ -26,12 +26,12 @@ public class BestiarioApplication
 	//*Este metodo crea un bean que implementa CommandLineRunner
 	//*Se ejecuta una sola vez al inicio de la app
 	//*Recibe como parametro el EnemigoRepository para poder guardar un enemigo en la base de datos
-	@Bean
-	public CommandLineRunner init(EnemigoRepository enemigoRepository)
-	{
+	//@Bean
+	//public CommandLineRunner init(EnemigoRepository enemigoRepository)
+	//{
 		//Aqui se crea un objeto Enemigo y se le asignas sus atributos mediante los setters
-		return args ->
-		{
+		//return args ->
+		//{
 			/*
 			Enemigo enemigo = new Enemigo();
 			enemigo.setNombre("Orco");
@@ -47,6 +47,6 @@ public class BestiarioApplication
 
 			//Imprimir el objeto se llama con toString de lombok
 			//System.out.println(enemigo);
-		};
-	}
+		//};
+	//}
 }

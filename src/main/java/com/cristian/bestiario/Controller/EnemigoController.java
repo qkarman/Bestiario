@@ -1,11 +1,14 @@
 package com.cristian.bestiario.Controller;
 
 import com.cristian.bestiario.Service.EnemigoService;
+import com.cristian.bestiario.dto.DescripcionDTO;
+import com.cristian.bestiario.dto.StatsDTO;
 import com.cristian.bestiario.entity.Enemigo;
 import com.excepciones.RecursoNoEncontradoExcepcion;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -109,5 +112,26 @@ public class EnemigoController
         log.info("Vida de enemigos: " + vida );
         enemigos.forEach(enemigo -> log.info(enemigo.toString()));
         return enemigos;
+    }
+
+    //! Hacemos pruebas de crear el endpoint para el DTO Stats
+    @GetMapping("/enemigos/stats/{nombre}")//http://localhost:8080/bestiario-app/enemigos/stats/Orco
+    public List<StatsDTO> obtenerStatsPorNombre(@PathVariable String nombre)
+    {
+        return enemigoService.buscarStatsPorNombre(nombre);
+    }
+
+    //!Creamos el endpoint para el DTO stats
+    @GetMapping("/enemigos/descripcion/{nombre}")//http://localhost:8080/bestiario-app/enemigos/descripcion/nombre
+    public List<DescripcionDTO> obtenerDescripcionPorNombre(@PathVariable String nombre)
+    {
+        return enemigoService.buscarDescripcionPorNombre(nombre);
+    }
+
+    //! Creamos el endpoint para los stats de enemigo poderoso
+    @GetMapping("/poderoso")//http://localhost:8080/bestiario-app/poderoso?ataqueMin=20&vidaMin=50
+    public List<StatsDTO> filtrarEnemigosPoderosos(@RequestParam int ataqueMin, @RequestParam int vidaMin)
+    {
+        return enemigoService.obtenerStatsPoderosos(ataqueMin, vidaMin);
     }
 }
