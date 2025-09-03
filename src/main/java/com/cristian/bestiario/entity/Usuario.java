@@ -35,4 +35,5 @@ public class Usuario
             favoritos.add(enemigo);
         }
     }
+
 }

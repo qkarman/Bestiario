@@ -1,12 +1,14 @@
 package com.cristian.bestiario.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
+
 
 //Creamos todas las anotaciones de lombok
 @Entity //Esta annotation representa una tabla en la base de datos
@@ -32,5 +34,7 @@ public class Enemigo
     //Creamos la lista de guardado y el many es para indicar una relacion de muchos a muchos entre entidad de
     //enemigo y usuario
     @ManyToMany(mappedBy = "favoritos")
-    private Set<Usuario> usuariosFavoritos = new HashSet<>();
+    @JsonIgnore
+    private List<Usuario> usuariosFavoritos = new ArrayList<>();
+
 }

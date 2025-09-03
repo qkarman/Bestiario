@@ -1,11 +1,12 @@
 package com.cristian.bestiario.Controller;
 
 import com.cristian.bestiario.Service.UsuarioService;
-import com.cristian.bestiario.entity.Enemigo;
+import com.cristian.bestiario.dto.FavoritosDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Set;
+import java.util.List;
+
 
 @AllArgsConstructor
 @RestController
@@ -23,9 +24,8 @@ public class UsuarioController
 
     //Endpoint para obtener favoritos
     @GetMapping("/{idUsuario}/favoritos")
-    public Set<Enemigo> obtenerFavoritos(@PathVariable Integer idUsuario)
+    public List<FavoritosDTO> obtenerFavoritos(@PathVariable Integer idUsuario)
     {
         return usuarioService.obtenerFavoritos(idUsuario);
     }
-
 }

@@ -1,5 +1,6 @@
 package com.cristian.bestiario.Service;
 
+import com.cristian.bestiario.dto.FavoritosDTO;
 import com.cristian.bestiario.entity.Enemigo;
 import com.cristian.bestiario.entity.Usuario;
 import com.cristian.bestiario.repository.EnemigoRepository;
@@ -7,7 +8,9 @@ import com.cristian.bestiario.repository.UsuarioRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Service
@@ -33,9 +36,21 @@ public class UsuarioService
     }
 
     //Obtener lista de favoritos de un usuario
-    public Set<Enemigo> obtenerFavoritos(Integer idUsuario)
+    public List<FavoritosDTO> obtenerFavoritos(Integer idUsuario)
     {
         Usuario usuario = usuarioRepository.findById(idUsuario).orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
-        return usuario.getFavoritos();
+
+        List<Enemigo> enemigosFavoritos = new ArrayList<>(usuario.getFavoritos());
+
+        List<FavoritosDTO> listaDTO = new ArrayList<>();
+
+        return enemigosFavoritos.stream().map(e -> {
+            FavoritosDTO dto = new FavoritosDTO();
+            dto.setNombre(e.getNombre());
+            dto.setAtaque(e.getAtaque());
+            dto.setVida(e.getVida());
+            dto.setFavorito(true);
+            return dto;
+        }).collect(Collectors.toList());
     }
 }
