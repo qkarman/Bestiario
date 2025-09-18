@@ -7,6 +7,7 @@ import com.cristian.bestiario.entity.Usuario;
 import com.cristian.bestiario.repository.EnemigoRepository;
 import com.cristian.bestiario.repository.NotaRepository;
 import com.cristian.bestiario.repository.UsuarioRepository;
+import com.cristian.bestiario.excepciones.NotaNotFoundExcepcion;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +19,7 @@ public class NotaService
     private final UsuarioRepository usuarioRepository;
     private final EnemigoRepository enemigoRepository;
 
-    public Nota crearOModificarNota(Integer idUsuario, Integer idEnemigo, String contenido)
+    public NotasDTO crearOModificarNota(Integer idUsuario, Integer idEnemigo, String contenido)
     {
         Usuario usuario = usuarioRepository.findById(idUsuario).orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
         Enemigo enemigo = enemigoRepository.findById(idEnemigo).orElseThrow(() -> new RuntimeException("Enemigo no encontrado"));
@@ -26,30 +27,42 @@ public class NotaService
         Nota nota = notaRepository.findByUsuarioAndEnemigo(usuario, enemigo).orElse(new Nota(null, usuario, enemigo, ""));
 
         nota.setContenido(contenido);
-        return notaRepository.save(nota);
+        Nota notaGuardada = notaRepository.save(nota);
+
+        return new NotasDTO(
+                notaGuardada.getIdNotas(),
+                notaGuardada.getUsuario().getNombreUsuario(),
+                notaGuardada.getEnemigo().getNombre(),
+                notaGuardada.getContenido()
+        );
     }
 
-    public Nota verNota(Integer idUsuario, Integer idEnemigo)
+    public NotasDTO verNota(Integer idUsuario, Integer idEnemigo)
     {
-        Usuario usuario = usuarioRepository.findById(idUsuario).orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
-        Enemigo enemigo = enemigoRepository.findById(idEnemigo).orElseThrow(() -> new RuntimeException("Enemigo no encontrado"));
+        Nota nota = notaRepository.findByUsuarioAndEnemigo(usuarioRepository.findById(idUsuario).orElseThrow(() -> new RuntimeException("usuario no encontrado")),
+                enemigoRepository.findById(idEnemigo).orElseThrow(() -> new RuntimeException("Enemigo no encontrado"))
+        ).orElseThrow(() -> new NotaNotFoundExcepcion("Nota no encontrada"));
 
-        return notaRepository.findByUsuarioAndEnemigo(usuario, enemigo).orElseThrow(() -> new RuntimeException("Nota no encontrada"));
+        return new NotasDTO(
+                nota.getIdNotas(),
+                nota.getUsuario().getNombreUsuario(),
+                nota.getEnemigo().getNombre(),
+                nota.getContenido()
+        );
     }
 
     public void eliminarNota(Integer idUsuario, Integer idEnemigo)
     {
-        Usuario usuario = usuarioRepository.findById(idUsuario).orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
-        Enemigo enemigo = enemigoRepository.findById(idEnemigo).orElseThrow(() -> new RuntimeException("Enemigo no encontrado"));
-
-        Nota nota = notaRepository.findByUsuarioAndEnemigo(usuario, enemigo).orElseThrow(() -> new RuntimeException("Nota no encontrada"));
+        Nota nota = notaRepository.findByUsuarioAndEnemigo(usuarioRepository.findById(idUsuario).orElseThrow(() -> new RuntimeException("Usuario no encontrado")),
+                        enemigoRepository.findById(idEnemigo).orElseThrow(() -> new RuntimeException("Enemigo no encontrado"))
+                ).orElseThrow(() -> new NotaNotFoundExcepcion("Nota no encontrada"));
 
         notaRepository.delete(nota);
     }
 
     public NotasDTO verNotas(Integer idUsuario, Integer idEnemigo)
     {
-        Nota nota = notaRepository.findByUsuario_IdUsuarioAndEnemigo_IdEnemigo(idUsuario, idEnemigo).orElseThrow(() -> new RuntimeException("Nota no encontrada"));
+        Nota nota = notaRepository.findNota(idUsuario, idEnemigo).orElseThrow(() -> new NotaNotFoundExcepcion("Nota no encontrada"));
 
         return new NotasDTO(
                 nota.getIdNotas(),

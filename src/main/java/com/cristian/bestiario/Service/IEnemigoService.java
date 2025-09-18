@@ -3,7 +3,7 @@ package com.cristian.bestiario.Service;
 import com.cristian.bestiario.entity.Enemigo;
 
 import java.util.List;
-
+//Falta comentarla es la siguiente
 /*
 Esta interfaz es como un menu de funciones que se deben implementar, sirve para que el controlador
 se comunique con la logica de negocio sin saber como está implementada exactamente, esto da flexibilidad,

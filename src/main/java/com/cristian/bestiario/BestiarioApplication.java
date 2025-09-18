@@ -1,12 +1,8 @@
 package com.cristian.bestiario;
 
-import com.cristian.bestiario.entity.Enemigo;
-import com.cristian.bestiario.repository.EnemigoRepository;
-
-import org.springframework.boot.CommandLineRunner; //Permite ejecutar código cuando inicia a la app
 import org.springframework.boot.SpringApplication; //Lanza la app
 import org.springframework.boot.autoconfigure.SpringBootApplication; //Indica que esta es la clase principal
-import org.springframework.context.annotation.Bean; //Indica que ese metodo produce un objeto que sera administrado por Spring
+
 
 /*
 Esta clase inicia el servidor Spring Boot, crea a un enemigo, lo guarda en la base de datos

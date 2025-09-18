@@ -2,39 +2,49 @@ package com.cristian.bestiario.Service;
 
 import com.cristian.bestiario.dto.DescripcionDTO;
 import com.cristian.bestiario.dto.StatsDTO;
-import com.cristian.bestiario.entity.Enemigo; //la entidad que se esta gestionando
+import com.cristian.bestiario.entity.Enemigo;
 import com.cristian.bestiario.repository.EnemigoRepository;
-import com.cristian.bestiario.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
-/*
-Esta clase es quien ejecuta la logica del negocio, apoyándose en el repositorio para comunicarse con la base de datos
-al implementar IEnemigoService, garantiza que ofrece las funciones basicas: listar, buscar, guardar y eliminar enemigos
+
+/**
+ * Servicio para gestionar la logica de negocio relacionada con la entidad enemigo
+ * Funciones principales:
+ * - Ejecuta operaciones CRUD sobre enemigos
+ * - Implementa filtros personalizados(por tipo, vida, stats, etc.)
+ * - Comunica el controlador con el repositorio para acceder a la base de datos
+ * Nota:
+ * - Al implementar IEnemigoService, garantiza que ofrece los métodos basicos: listar, buscar, guardar
+ *  y eliminar enemigos.
+ * - Los métodos de filtro permiten consultas más avanzadas y devuelven DTOs cuando es necesario
  */
-
-
-//? Le dice a Spring que esta clase debe ser gestionada como un componente de servicio, asi podra inyectar
-//? en otras partes del sistema como en los controladores y se implementa los metodos de la interfaz
 @Service
 public class EnemigoService implements IEnemigoService
 {
-    //Inyecta una instancia del repositorio EnemigoRepository para acceder a los datos de la base de datos
-    //y Spring se encarga de instanciarlos automáticamente gracias a @Autowired
+    /**
+     * Repositorio para acceder a los datos de la entidad Enemigo en la base de datos
+     * La inyección de dependencias es automatica gracias a @Autowired
+     */
     @Autowired
     private EnemigoRepository enemigoRepository;
 
-    //*Recupera todos los enemigos almacenados en la base de datos usando el metodo findAll() que viene de JpaRepository
+    /**
+     * Recupera todos los enemigos almacenados en la base de datos
+     * @return Lista de todos los enemigos
+     */
     @Override
     public List<Enemigo> listarEnemigos()
     {
         return this.enemigoRepository.findAll();
     }
 
-    //*Busca un enemigo por su ID
+    /**
+     * Busca un enemigo por su ID
+     * @param idEnemigo ID del enemigo a buscar
+     * @return Enemigo si existe, o null si no se encuentra
+     */
     @Override
     public Enemigo buscarEnemigoId(Integer idEnemigo)
     {
@@ -42,13 +52,21 @@ public class EnemigoService implements IEnemigoService
         return enemigo;
     }
 
-    //*Guarda un enemigo o actualiza uno existente(si ya tiene ID)
+    /**
+     * Guarda un nuevo enemigo o actualiza uno existente si ya tiene ID
+     * @param enemigo Objeto enemigo a guardar o actualizar
+     * @return Enemigo guardado o actualizado
+     */
     @Override
     public Enemigo guardarEnemigo(Enemigo enemigo)
     {
         return this.enemigoRepository.save(enemigo);
     }
 
+    /**
+     * Elimina un enemigo de la base de datos por su ID
+     * @param idEnemigo ID del enemigo a eliminar
+     */
     //*Elimina el enemigo con el ID especificado
     @Override
     public void eliminarEnemigoId(Integer idEnemigo)
@@ -56,33 +74,57 @@ public class EnemigoService implements IEnemigoService
         this.enemigoRepository.deleteById(idEnemigo);
     }
 
-    //¡Implementation de los filtros
+    // =========================
+    // Métodos de filtros avanzados
+    // =========================
 
-    //! Implementamos el metodo del filtro PRUEBA
+    /**
+     * Busca enemigos por su tipo (ej. "Orco", "Dragon")
+     * @param tipo Tipo de enemigo
+     * @return Lista de enemigos que coinciden con el tipo
+     */
     public List<Enemigo> buscarEnemigosPorTipo(String tipo)
     {
         return enemigoRepository.findByTipo(tipo);
     }
 
-    //! Implementamos el metodo del filtro Nombre, Vida y ataque
+    /**
+     * Busca enemigos por su valor de vida
+     * @param vida Puntos de vida del enemigo
+     * @return Lista de enemigos que tienen la vida indicada
+     */
     public List<Enemigo> buscarEnemigosPorVida(Integer vida)
     {
         return enemigoRepository.findByVida(vida);
     }
 
-    //!Prueba para el DTO de enemigos Stats
+    /**
+     * Obtiene estadísticas de un enemigo específico usando StatsDTO
+     * @param nombre Nombre del enemigo
+     * @return Lista de StatsDTO con nombre, vida y ataque
+     */
     public List<StatsDTO> buscarStatsPorNombre(String nombre)
     {
         return enemigoRepository.findStatsByNombre(nombre);
     }
 
-    //!Creamos el bug que vamos a corregir
+    /**
+     * Obtiene la descripcion de un enemigo usando DescripcionDTO
+     * Permite una visualizacion más limpia y personalizada
+     * @param nombre Nombre del enemigo
+     * @return Lista de DescripcionDTO con nombre, tipo y descripcion
+     */
     public List<DescripcionDTO> buscarDescripcionPorNombre(String nombre)
     {
         return enemigoRepository.findDescripcionByNombre(nombre);
     }
 
-    //! Creamos el Metodo de comunicacion para el enemigo poderoso
+    /**
+     * Filtro enemigos considerados "Poderosos" segun los valores minimos de ataque
+     * @param ataqueMin Ataque minimo requerido
+     * @param vidaMin Vida minima requerida
+     * @return Lista de StatsDTO que cumple con los parametros
+     */
     public List<StatsDTO> obtenerStatsPoderosos(int ataqueMin, int vidaMin)
     {
         return enemigoRepository.filtrarEnemigosPoderosos(ataqueMin, vidaMin);
