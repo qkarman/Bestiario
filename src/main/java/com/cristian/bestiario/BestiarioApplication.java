@@ -3,17 +3,18 @@ package com.cristian.bestiario;
 import org.springframework.boot.SpringApplication; //Lanza la app
 import org.springframework.boot.autoconfigure.SpringBootApplication; //Indica que esta es la clase principal
 
-
-/*
-Esta clase inicia el servidor Spring Boot, crea a un enemigo, lo guarda en la base de datos
-y luego lo imprime en consola
+/**
+ * Esta es la clase principal de la aplicacion bestiario
+ * su funcion es iniciar el servidor de Sprint Boot y levantar el contexto de la app
+ * también puede usarse para ejecutar código de prueba al inicio (CommandLineRunner
  */
 
-//Indica que es la clase principal
+//Indica que esta clase es la principal de configuracion de Spring Boot
 @SpringBootApplication
 public class BestiarioApplication
 {
-	//Indica el metodo main
+	//Metodo main -> Punto de la aplicacion
+	//Aquí se arranca el servidor embebido (Tomcat) y el contexto de Spring
 	public static void main(String[] args)
 	{
 		SpringApplication.run(BestiarioApplication.class, args);
