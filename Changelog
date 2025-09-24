@@ -1,0 +1,33 @@
+# 📜 Changelog
+Todas las modificaciones importantes de este proyecto serán documentadas en este archivo.  
+El formato está basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.0.0/)  
+y este proyecto se adhiere a [Semantic Versioning](https://semver.org/lang/es/).
+
+---
+
+## [Unreleased]
+
+## [0.1.0] - 2025-09-24
+### Added
+- Creación inicial del proyecto **Bestiario**.
+- CRUD de enemigos con:
+  - `GET /enemigos`
+  - `GET /enemigos/{id}`
+  - `POST /enemigos`
+  - `PUT /enemigos/{id}`
+  - `DELETE /enemigos/{id}`
+- Entidad **Usuario** con funcionalidad de favoritos:
+  - `POST /usuarios/{idUsuario}/favoritos/{idEnemigo}`
+  - `GET /usuarios/{idUsuario}/favoritos`
+- Entidad **Nota** asociada a enemigos:
+  - `POST /notas/{idUsuario}/{idEnemigo}`
+  - `GET /notas/{idUsuario}/{idEnemigo}`
+  - `DELETE /notas/{idUsuario}/{idEnemigo}`
+
+---
+
+## [0.0.1] - 2025-09-20
+### Added
+- Estructura inicial del proyecto con **Spring Boot 3.5.4**.
+- Integración con **MySQL**.
+- Dependencias configuradas en `pom.xml`.
