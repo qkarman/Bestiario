@@ -80,6 +80,8 @@ POST /enemigos
   "descripcion": "Orco de los montes"
 }
 
+![Diagrama Bestiario](https://github.com/user-attachments/assets/0919853f-7b4b-4cb6-8b05-c489fcae8775)
+
 ## 👤 Autor
 
 Cristian Flores
