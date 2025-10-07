@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -72,11 +73,54 @@ public class UsuarioService
         //Transformamos cada enemigo en un FavoritosDTO con programación funcional(stream)
         return enemigosFavoritos.stream().map(e -> {
             FavoritosDTO dto = new FavoritosDTO();
+            dto.setIdEnemigo(e.getIdEnemigo());
             dto.setNombre(e.getNombre());
             dto.setAtaque(e.getAtaque());
             dto.setVida(e.getVida());
             dto.setFavorito(true); // Al estar en esta lista, siempre es favorito
             return dto;
         }).collect(Collectors.toList());
+    }
+
+    //! Agregamos nuevo código
+    public List<FavoritosDTO> listarEnemigosConFavoritos(Integer idUsuario)
+    {
+        Usuario usuario = usuarioRepository.findById(idUsuario).orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        List<Enemigo> todosEnemigos = enemigoRepository.findAll();
+        Set<Enemigo> favoritos = usuario.getFavoritos();
+
+        return todosEnemigos.stream().map(e -> {
+            FavoritosDTO dto = new FavoritosDTO();
+            dto.setIdEnemigo(e.getIdEnemigo());
+            dto.setNombre(e.getNombre());
+            dto.setAtaque(e.getAtaque());
+            dto.setVida(e.getVida());
+            dto.setFavorito(favoritos.contains(e));
+            return dto;
+        }).collect(Collectors.toList());
+    }
+
+    //!Nuevo codigo para agregar
+    public FavoritosDTO actualizarFavorito(Integer idUsuario, Integer idEnemigo, boolean favorito)
+    {
+        Usuario usuario = usuarioRepository.findById(idUsuario).orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+        Enemigo enemigo = enemigoRepository.findById(idEnemigo).orElseThrow(() -> new RuntimeException("Enemigo no encontrado"));
+
+        // Actualiza el favorito según el boolean que envías
+        if (favorito) {
+            usuario.getFavoritos().add(enemigo);
+        } else {
+            usuario.getFavoritos().remove(enemigo);
+        }
+
+        usuarioRepository.save(usuario);
+
+        return new FavoritosDTO(
+                enemigo.getIdEnemigo(),
+                enemigo.getNombre(),
+                enemigo.getVida(),
+                enemigo.getAtaque(),
+                favorito);
     }
 }

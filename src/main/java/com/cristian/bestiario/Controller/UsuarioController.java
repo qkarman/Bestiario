@@ -3,6 +3,7 @@ package com.cristian.bestiario.Controller;
 import com.cristian.bestiario.Service.UsuarioService;
 import com.cristian.bestiario.dto.FavoritosDTO;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,5 +31,21 @@ public class UsuarioController
     public List<FavoritosDTO> obtenerFavoritos(@PathVariable Integer idUsuario)
     {
         return usuarioService.obtenerFavoritos(idUsuario); //Retorna la lista de favoritos como DTO
+    }
+
+    //!Nuevo codigo para frontend
+    @GetMapping("/{idUsuario}/enemigos")
+    public List<FavoritosDTO> listarEnemigosConFavoritos(@PathVariable Integer idUsuario)
+    {
+        return usuarioService.listarEnemigosConFavoritos(idUsuario);
+    }
+
+    //!Agregamos codigo para actualizar
+    @PutMapping("/idUsuarios/enemigos/{idEnemigo}/favorito")
+    public FavoritosDTO actualizarFavorito(
+            @PathVariable Integer idUsuario,
+            @PathVariable Integer idEnemigo,
+            @RequestBody FavoritosDTO favoritoDTO) {
+        return usuarioService.actualizarFavorito(idUsuario, idEnemigo, favoritoDTO.isFavorito());
     }
 }

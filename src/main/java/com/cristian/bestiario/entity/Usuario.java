@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -24,6 +25,7 @@ import java.util.Set;
  */
 @Entity //Esta annotation representa una tabla en la base de datos
 @Data //Lombok genera automáticamente getters, setters, toString, equals y hashcode
+@ToString(exclude = "enemigosFavoritos")
 @NoArgsConstructor //Lombok genera un constructor vació(sin parameters)
 @AllArgsConstructor
 public class Usuario

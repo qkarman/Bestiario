@@ -19,6 +19,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor // Constructor con todos los campos
 public class FavoritosDTO
 {
+    private Integer idEnemigo;
     private String nombre;
     private Integer vida;
     private Integer ataque;

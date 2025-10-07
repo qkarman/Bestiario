@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +33,7 @@ import java.util.List;
 @Data //Lombok genera automáticamente getters, setters, toString, equals y hashcode
 @NoArgsConstructor //Lombok genera un constructor vació(sin parameters)
 @AllArgsConstructor //Lombok genera un constructor con todos los campos de la clase
+@ToString(exclude = "usuariosFavoritos") //Evita la recursion
 public class Enemigo
 {
     @Id // Clave primaria
