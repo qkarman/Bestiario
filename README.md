@@ -26,7 +26,7 @@ Este proyecto está dividido en **backend (Spring Boot)** y **frontend (Angular)
 
 ### **Backend**
 
-* Java 17
+* Java 21
 * Spring Boot (REST API)
 * Maven
 * MySQL
