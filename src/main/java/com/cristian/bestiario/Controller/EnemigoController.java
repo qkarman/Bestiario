@@ -204,4 +204,13 @@ public class EnemigoController
     {
         return enemigoService.obtenerStatsPoderosos(ataqueMin, vidaMin);
     }
+
+    //******************************************************************************************
+    // ¡Version 1.1
+    @GetMapping("/ordenAsc")//http://localhost:8081/bestiario-app/ordenAsc
+    public ResponseEntity<List<StatsDTO>> listarOrdenados()
+    {
+        return ResponseEntity.ok(enemigoService.ordenarBestias());
+    }
+
 }

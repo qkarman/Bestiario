@@ -16,7 +16,7 @@ import java.util.List;
  * - Enemigo: entidad que maneja el repositorio
  * - Integer: tipo de dato de la clave primaria (idEnemigo)
  * Funcionalidad:
- * - Permite consultas personalizadas usando JPQL
+ * - Permite consultas personalizadas usando JPQL que accede directo a los datos de la base de datos
  * - Devuelve resultados usando DTOs para exponer toda la entidad
  */
 public interface EnemigoRepository extends JpaRepository<Enemigo,Integer>
@@ -77,4 +77,14 @@ public interface EnemigoRepository extends JpaRepository<Enemigo,Integer>
 
     // Métodos CRUD disponibles automáticamente gracias a JpaRepository:
     // findAll(), findById(id), save(entidad), deleteById(id), existsById(id)
+
+    //**************************************************************************************************************
+    // ¡Version 1.1
+    //! Metodo para devolver todos los enemigos en lista de forma alfabética y ordenada
+    List<Enemigo> findAllByOrderByNombreAsc();
+    /**
+     * Se agregara esto automáticamente por spring
+     * SELECT * FROM enemigo ORDER BY nombre ASC;
+     */
+
 }

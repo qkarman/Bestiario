@@ -5,6 +5,7 @@ import com.cristian.bestiario.dto.StatsDTO;
 import com.cristian.bestiario.entity.Enemigo;
 import com.cristian.bestiario.repository.EnemigoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -60,6 +61,7 @@ public class EnemigoService implements IEnemigoService
     @Override
     public Enemigo guardarEnemigo(Enemigo enemigo)
     {
+        enemigo.setNombre(normalizarNombre(enemigo.getNombre()));
         return this.enemigoRepository.save(enemigo);
     }
 
@@ -128,6 +130,23 @@ public class EnemigoService implements IEnemigoService
     public List<StatsDTO> obtenerStatsPoderosos(int ataqueMin, int vidaMin)
     {
         return enemigoRepository.filtrarEnemigosPoderosos(ataqueMin, vidaMin);
+    }
+
+    //******************************************************************************************
+    // ¡Version 1.1
+    public List<StatsDTO> ordenarBestias()
+    {
+        return enemigoRepository
+                .findAll(Sort.by("nombre").ascending())
+                .stream()
+                .map(e -> new StatsDTO(e.getNombre(), e.getVida(), e.getAtaque()))
+                .toList();
+    }
+
+    private String normalizarNombre(String nombre)
+    {
+        return nombre == null ? null :
+                nombre.trim().replaceAll("\\s+", " ");
     }
 
 }

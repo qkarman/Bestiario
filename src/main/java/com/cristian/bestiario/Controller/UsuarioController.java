@@ -40,12 +40,15 @@ public class UsuarioController
         return usuarioService.listarEnemigosConFavoritos(idUsuario);
     }
 
-    //!Agregamos codigo para actualizar
-    @PutMapping("/idUsuarios/enemigos/{idEnemigo}/favorito")
+    //!Agregamos código para actualizar
+    @PutMapping("/{idUsuario}/enemigos/{idEnemigo}/favorito")
     public FavoritosDTO actualizarFavorito(
             @PathVariable Integer idUsuario,
             @PathVariable Integer idEnemigo,
             @RequestBody FavoritosDTO favoritoDTO) {
-        return usuarioService.actualizarFavorito(idUsuario, idEnemigo, favoritoDTO.isFavorito());
+        return usuarioService.actualizarFavorito(
+                idUsuario,
+                idEnemigo,
+                favoritoDTO.isFavorito());
     }
 }

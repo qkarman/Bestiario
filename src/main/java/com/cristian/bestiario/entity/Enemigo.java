@@ -57,4 +57,13 @@ public class Enemigo
     @ManyToMany(mappedBy = "favoritos")
     @JsonIgnore
     private List<Usuario> usuariosFavoritos = new ArrayList<>();
+
+    @PrePersist
+    @PreUpdate
+    public void limpiarCampos()
+    {
+        this.nombre = this.nombre == null ? null:
+                this.nombre.trim().replaceAll("\\s+", " ");
+    }
+
 }
