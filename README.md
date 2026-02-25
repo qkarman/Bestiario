@@ -1,110 +1,181 @@
-# 🐉 Bestiario — Sistema de Gestión de Criaturas
+🐉 Bestiario — Sistema de Gestión de Criaturas
 
-Proyecto desarrollado por **Cristian Flores**, pensado como parte de un portafolio profesional.
-El sistema permite **agregar, editar, eliminar y consultar enemigos** inspirados en juegos como *Calabozos y Dragones*.
+Aplicación full-stack desarrollada con Spring Boot (Java 21) y Frontend en JavaScript, HTML y CSS, que implementa una arquitectura basada en REST API para la gestión personalizada de criaturas dentro de un sistema tipo bestiario.
 
-Este proyecto está dividido en **backend (Spring Boot)** y **frontend (Angular)**, utilizando bases de datos **MySQL** y principios de lógica matemática para filtros y búsquedas avanzadas.
+El sistema permite a los usuarios administrar criaturas, marcarlas como favoritas y agregar notas estratégicas asociadas, manteniendo persistencia individual por usuario.
 
----
+🚀 Descripción General
 
-## 📌 Características principales
+Bestiario App es una aplicación orientada a demostrar:
 
-* 📚 Registro completo de enemigos (nombre, tipo, estadísticas, atributos).
-* 🔍 Filtros inteligentes basados en:
+Diseño de APIs REST bien estructuradas.
 
-  * lógica proposicional
-  * tablas de verdad
-  * teoría de conjuntos
-* 🧮 Búsquedas optimizadas usando modelos matemáticos.
-* 🗃 Persistencia en MySQL con conexión mediante DBeaver.
-* ⚙ Arquitectura orientada a ser un proyecto escalable para portafolio.
-* 🎨 Frontend en Angular con una interfaz visual clara y agradable.
+Modelado relacional con JPA / Hibernate.
 
----
+Manejo de relaciones entre entidades.
 
-## 🛠 Tecnologías Utilizadas
+Separación clara entre frontend y backend.
 
-### **Backend**
+Aplicación de lógica matemática en filtros dinámicos.
 
-* Java 21
-* Spring Boot (REST API)
-* Maven
-* MySQL
-* JPA / Hibernate
+Cada usuario posee su propio contexto de bestiario, evitando que el sistema sea un simple CRUD y convirtiéndolo en una aplicación con persistencia personalizada.
 
-### **Frontend**
+🏗 Arquitectura del Sistema
 
-* Angular
-* TypeScript
-* HTML / CSS
+La aplicación sigue una arquitectura cliente-servidor:
 
----
+Frontend (JavaScript + HTML + CSS)
+                ↓
+        REST API (Spring Boot)
+                ↓
+          MySQL Database
 
-## 🚀 Cómo Ejecutarlo
+📌 Diagrama de Arquitectura
 
-### **1. Clonar el repositorio**
+<img width="1293" height="582" alt="image" src="https://github.com/user-attachments/assets/ed499cdc-2be5-4b0b-b13d-2c197a2c18a5" />
 
-```
-git clone https://github.com/crisflores23/bestiario.git
-```
 
-### **2. Backend**
+📌 Funcionalidades Principales
 
-* Importar proyecto Spring Boot.
-* Configurar `application.properties` con tu MySQL.
-* Ejecutar la app:
+🐲 Gestión de Criaturas (CRUD)
 
-```
+Crear criaturas.
+
+Listar criaturas.
+
+Consultar criatura por ID.
+
+Actualizar información.
+
+Eliminar registros.
+
+⭐ Sistema de Favoritos por Usuario
+
+Marcar y desmarcar criaturas como favoritas.
+
+Persistencia individual por usuario.
+
+Consulta dinámica de favoritos.
+
+Relación muchos-a-muchos controlada mediante endpoints anidados.
+
+📝 Notas Estratégicas
+
+Agregar una nota personalizada por usuario y criatura.
+
+Recuperar nota individual.
+
+Endpoint estructurado con contexto de usuario.
+
+🛠 Tecnologías Utilizadas
+Backend
+
+Java 21
+
+Spring Boot
+
+Spring Web (REST)
+
+Spring Data JPA
+
+Hibernate
+
+Maven
+
+MySQL
+
+Frontend
+
+JavaScript (ES6+)
+
+HTML5
+
+CSS3
+
+🧠 Fundamentos Aplicados
+
+El proyecto integra principios de lógica matemática y estructuración formal:
+
+Operadores lógicos personalizados.
+
+Filtros dinámicos combinados (AND / OR / NOT).
+
+Modelado basado en relaciones y conjuntos.
+
+Aplicación de condiciones compuestas en búsquedas.
+
+Ejemplo de lógica soportada:
+
+(fuerza > 10 AND tipo = "bestia") OR nivel < 3
+
+Exclusión por conjuntos específicos.
+
+Filtros combinados con múltiples parámetros.
+
+🔌 Endpoints Principales
+Criaturas
+GET    /enemigos
+GET    /enemigo/{id}
+POST   /enemigos
+PUT    /enemigos/{id}
+DELETE /enemigos/{id}
+
+Favoritos
+POST   /usuarios/{id}/enemigos/{enemigoId}/favorito
+DELETE /usuarios/{id}/enemigos/{enemigoId}/favorito
+GET    /usuarios/{id}/favoritos
+
+Notas
+GET  /usuarios/{id}/enemigos/{enemigoId}/nota
+POST /usuarios/{id}/enemigos/{enemigoId}/nota
+
+🚀 Cómo Ejecutar el Proyecto
+1️⃣ Clonar el repositorio
+git clone https://github.com/qkarman/Bestiario.git
+
+2️⃣ Configurar Backend
+
+Importar el proyecto en tu IDE (IntelliJ / Eclipse).
+
+Configurar application.properties con tus credenciales de MySQL.
+
+Ejecutar:
+
 mvn spring-boot:run
-```
 
-### **3. Frontend**
 
-```
-cd frontend/
-npm install
-ng serve
-```
+El servidor se iniciará en:
 
----
+http://localhost:8081/bestiario-app
 
-## 🧠 Lógica y Matemáticas Aplicadas
+3️⃣ Ejecutar Frontend
 
-Este proyecto integra ideas de:
+Abrir el archivo principal HTML en el navegador o servirlo con una extensión tipo Live Server.
 
-* **Tablas de verdad**
-* **Operaciones de conjuntos**
-* **Lógica de primer orden**
-* **Filtros por operadores lógicos custom**
-
-Esto permite búsquedas como:
-
-* enemigos que cumplan **(fuerza > 10 Y tipo = “bestia”) O nivel < 3**
-* enemigos que NO pertenezcan a ciertos grupos
-
----
-
-## 📌 Estado del Proyecto
+📈 Estado del Proyecto
 
 En desarrollo activo.
-Se planea integrar:
 
-* ✔ Mejor UI en Angular
-* ✔ Nuevas categorías de enemigos
-* ⬜ Sistema de autenticación
-* ⬜ Exportación del bestiario a PDF
-* ⬜ Integración con IA para generación automática de enemigos
+Próximas mejoras:
 
----
+✔ Mejora de interfaz visual.
 
-## 📄 Licencia
+✔ Nuevas categorías de criaturas.
 
-Este proyecto está bajo la licencia **MIT**.
+⬜ Sistema de autenticación y autorización.
 
----
+⬜ Exportación del bestiario a PDF.
 
-## 👤 Autor
+⬜ Integración con generación automática de criaturas.
 
-**Cristian Flores**
+⬜ Despliegue en entorno productivo.
+
+📄 Licencia
+
+Este proyecto está bajo la licencia MIT.
+
+👤 Autor
+
+Qkarman
 Desarrollador Backend
-Inspirado por modelos matemáticos y diseño limpio de software.
+Interesado en arquitectura limpia, lógica formal aplicada y diseño estructurado de sistemas.
